@@ -22,7 +22,7 @@ def main():
     cursor_obj.execute(table)
 
     table = """ CREATE TABLE Exo(
-                Id INT PRIMARY KEY NOT NULL,
+                Id VARCHAR(255) PRIMARY KEY NOT NULL,
                 Tags VARCHAR(255),
                 Lesson INT,
                 FOREIGN KEY(Lesson) REFERENCES Lesson(Id)
@@ -34,6 +34,9 @@ def main():
     cursor_obj.execute('''INSERT INTO Lesson(Ord, Name) VALUES(2,"shmiton")''')
     cursor_obj.execute('''INSERT INTO Lesson(Ord, Name) VALUES(3,"sliton")''')
 
+    cursor_obj.execute('''INSERT INTO Exo(Id, Tags)VALUES("central2010","biton")''')
+    cursor_obj.execute('''INSERT INTO Exo(Id, Tags) VALUES("ccp2021","sliton")''')
+    cursor_obj.execute('''INSERT INTO Exo(Id, Tags) VALUES("cnc2022","biton,shmiton,sliton")''')
     connection_obj.commit()
     print("Table is Ready")
 

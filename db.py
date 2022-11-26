@@ -7,6 +7,7 @@ def GetLessons():
     res = cur.fetchall()
     print(res)
     return res
+
 def AddLesson(name, order):
     con = sq.connect(DATABASEFILE)
     cur = con.cursor()
@@ -15,6 +16,7 @@ def AddLesson(name, order):
     cur.execute(Rq, thing)
     con.commit()
     con.close()
+
 def DeleteLesson(name):
     con = sq.connect(DATABASEFILE)
     cur = con.cursor()
@@ -23,4 +25,53 @@ def DeleteLesson(name):
     con.commit()
     con.close()
 
+def GetExos():
+    con = sq.connect(DATABASEFILE)
+    cur = con.cursor()
+    Rq = """SELECT * FROM Exo"""
+    cur.execute(Rq)
+    res = cur.fetchall()
+    print(res)
+    return res
+
+def GetExoFromName(name):
+    con = sq.connect(DATABASEFILE)
+    cur = con.cursor()
+    Rq = """SELECT * FROM Exo WHERE Id = ?"""
+    cur.execute(Rq, (name,))
+    res = cur.fetchall()
+    print(res)
+    return res
+
+def GetExoFromTag(tag):
+    con = sq.connect(DATABASEFILE)
+    cur = con.cursor()
+    Rq = """SELECT *
+    FROM Exo
+    WHERE (',' + RTRIM(Tags) + ',') LIKE '%,' + ? + ',%'
+    """
+    cur.execute(Rq, (tag,))
+    res = cur.fetchall()
+    print(res)
+    return res
+
+def AddExo(Id, Tags):
+    con = sq.connect(DATABASEFILE)
+    cur = con.cursor()
+    thing = (Id, Tags);
+    Rq = """INSERT INTO Exo(Id, Tags) VALUES(?, ?)"""
+    cur.execute(Rq, thing)
+    con.commit()
+    con.close()
+
+def DeleteExo(Id):
+    con = sq.connect(DATABASEFILE)
+    cur = con.cursor()
+    Rq = """DELETE FROM Exo WHERE Id = ?;"""
+    cur.execute(Rq, (Id,))
+    con.commit()
+    con.close()
+
 GetLessons()
+GetExos()
+GetExoFromTag('biton')
