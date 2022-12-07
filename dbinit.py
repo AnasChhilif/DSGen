@@ -14,9 +14,8 @@ def main():
 
     # Creating table
     table = """ CREATE TABLE Lesson(
-                Id INTEGER PRIMARY KEY,
-                Ord INT NOT NULL,
-                Name VARCHAR(255) NOT NULL
+                Name VARCHAR(255) NOT NULL PRIMARY KEY,
+                Ord INT NOT NULL
             ); """
 
     cursor_obj.execute(table)
@@ -24,19 +23,20 @@ def main():
     table = """ CREATE TABLE Exo(
                 Id VARCHAR(255) PRIMARY KEY NOT NULL,
                 Tags VARCHAR(255),
-                Lesson INT,
-                FOREIGN KEY(Lesson) REFERENCES Lesson(Id)
+                Path VARCHAR(255) NOT NULL,
+                Lesson VARCHAR(255) NOT NULL,
+                FOREIGN KEY(Lesson) REFERENCES Lesson(Name)
             ); """
 
     cursor_obj.execute(table)
 
-    cursor_obj.execute('''INSERT INTO Lesson(Id, Ord, Name) VALUES(1337, 1,"biton")''')
-    cursor_obj.execute('''INSERT INTO Lesson(Ord, Name) VALUES(2,"shmiton")''')
-    cursor_obj.execute('''INSERT INTO Lesson(Ord, Name) VALUES(3,"sliton")''')
+    cursor_obj.execute('''INSERT INTO Lesson(Name, Ord) VALUES("biton", 1)''')
+    cursor_obj.execute('''INSERT INTO Lesson(Name, Ord) VALUES("shmiton", 2)''')
+    cursor_obj.execute('''INSERT INTO Lesson(Name, Ord) VALUES("sliton", 3)''')
 
-    cursor_obj.execute('''INSERT INTO Exo(Id, Tags)VALUES("central2010","biton")''')
-    cursor_obj.execute('''INSERT INTO Exo(Id, Tags) VALUES("ccp2021","sliton")''')
-    cursor_obj.execute('''INSERT INTO Exo(Id, Tags) VALUES("cnc2022","biton,shmiton,sliton")''')
+    cursor_obj.execute('''INSERT INTO Exo(Id, Tags, Path, Lesson)VALUES("central2010","biton", "~/DSGen/exos/ex1.tex", "biton")''')
+    cursor_obj.execute('''INSERT INTO Exo(Id, Tags, Path, Lesson) VALUES("ccp2021","sliton", "~/DSGen/exos/ex2.tex", "sliton")''')
+    cursor_obj.execute('''INSERT INTO Exo(Id, Tags, Path, Lesson) VALUES("cnc2022","biton,shmiton,sliton", "~/DSGen/exos/ex3.tex", "shmiton")''')
     connection_obj.commit()
     print("Table is Ready")
 
