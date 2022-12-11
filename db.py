@@ -34,18 +34,18 @@ def GetExos():
     res = cur.fetchall()
     return res
 
-def GetExoFromName(name):
+def GetExoName():
     con = sq.connect(DATABASEFILE)
     cur = con.cursor()
-    Rq = """SELECT * FROM Exo WHERE Id = ?"""
-    cur.execute(Rq, (name,))
+    Rq = """SELECT Id FROM Exo"""
+    cur.execute(Rq)
     res = cur.fetchall()
     return res
 
 def GetExoFromLesson(name):
     con = sq.connect(DATABASEFILE)
     cur = con.cursor()
-    Rq = """SELECT Path FROM Exo WHERE Lesson = ?"""
+    Rq = """SELECT Id,Path FROM Exo WHERE Lesson = ?"""
     cur.execute(Rq, name)
     res = cur.fetchall()
     return res
@@ -61,11 +61,11 @@ def GetExoFromTag(tag):
     res = cur.fetchall()
     return res
 
-def AddExo(Id, Tags):
+def AddExo(Id, Tags, Path, Lesson):
     con = sq.connect(DATABASEFILE)
     cur = con.cursor()
-    thing = (Id, Tags);
-    Rq = """INSERT INTO Exo(Id, Tags) VALUES(?, ?)"""
+    thing = (Id, Tags, Path, Lesson);
+    Rq = """INSERT INTO Exo(Id, Tags, Path, Lesson) VALUES(?, ?, ?, ?)"""
     cur.execute(Rq, thing)
     con.commit()
     con.close()
@@ -74,6 +74,6 @@ def DeleteExo(Id):
     con = sq.connect(DATABASEFILE)
     cur = con.cursor()
     Rq = """DELETE FROM Exo WHERE Id = ?;"""
-    cur.execute(Rq, (Id,))
+    cur.execute(Rq, Id)
     con.commit()
     con.close()

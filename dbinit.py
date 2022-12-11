@@ -34,9 +34,9 @@ def main():
     cursor_obj.execute('''INSERT INTO Lesson(Name, Ord) VALUES("shmiton", 2)''')
     cursor_obj.execute('''INSERT INTO Lesson(Name, Ord) VALUES("sliton", 3)''')
 
-    cursor_obj.execute('''INSERT INTO Exo(Id, Tags, Path, Lesson)VALUES("central2010","biton", "~/DSGen/exos/ex1.tex", "biton")''')
-    cursor_obj.execute('''INSERT INTO Exo(Id, Tags, Path, Lesson) VALUES("ccp2021","sliton", "~/DSGen/exos/ex2.tex", "sliton")''')
-    cursor_obj.execute('''INSERT INTO Exo(Id, Tags, Path, Lesson) VALUES("cnc2022","biton,shmiton,sliton", "~/DSGen/exos/ex3.tex", "shmiton")''')
+    cursor_obj.execute('''INSERT INTO Exo(Id, Tags, Path, Lesson)VALUES("central2010","biton", "exos/ex1.tex", "biton")''')
+    cursor_obj.execute('''INSERT INTO Exo(Id, Tags, Path, Lesson) VALUES("ccp2021","sliton", "exos/ex2.tex", "sliton")''')
+    cursor_obj.execute('''INSERT INTO Exo(Id, Tags, Path, Lesson) VALUES("cnc2022","biton,shmiton,sliton", "exos/ex3.tex", "shmiton")''')
     connection_obj.commit()
     print("Table is Ready")
 
