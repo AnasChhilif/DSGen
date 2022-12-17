@@ -1,5 +1,6 @@
 import os
 import gui, db
+from random import randint
 
 def GetDS(L, num):
     T = []
@@ -10,8 +11,13 @@ def GetDS(L, num):
     for i in T:
         Exos.append(db.GetExoFromLesson(i))
     Generated = []
-    for i in range(int(num.get())):
-        Generated.append(Exos[i])
+    cnt = 0
+    while cnt < int(num.get()):
+        buffer = Exos[randint(0,int(num.get()))]
+        if(buffer not in Generated):
+            Generated.append(buffer)
+            cnt += 1
+
     return Generated
 
 def GeneratePDF(L, binary):
