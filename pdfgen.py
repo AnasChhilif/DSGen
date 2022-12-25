@@ -13,7 +13,7 @@ def GetDS(L, num):
     Generated = []
     cnt = 0
     while cnt < int(num.get()):
-        buffer = Exos[randint(0,int(num.get()))]
+        buffer = Exos[randint(0,int(num.get())-1)]
         if(buffer not in Generated):
             Generated.append(buffer)
             cnt += 1
