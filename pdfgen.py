@@ -2,6 +2,12 @@ import os
 import gui, db
 from random import randint
 
+# Generates a list of exercises to turn into exam depending on the Lessons entered and the number of exercises
+# wanted
+#
+# @param {list} L : list of lessons selected by user
+# @param {int} num : number of exercises wanted
+# @returns {list} Generated : list of exercises generated
 def GetDS(L, num):
     T = []
     for i in L :
@@ -20,6 +26,9 @@ def GetDS(L, num):
 
     return Generated
 
+# Generated the tex file of the exam
+# @param {list} L : list of exercise paths to put into exam tex
+# @param {string} binary : value of radio button of whether to generate a "DS" or "TD"
 def GeneratePDF(L, binary):
     if('result.tex' in os.listdir()):
         os.remove('result.tex')

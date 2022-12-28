@@ -10,12 +10,35 @@ class App(Frame):
         super().__init__(root)
         root.title("DSGen")
 
+        #defining a mainframe widget, which acts like a container to all other widgets
         self.mainframe = ttk.Frame(root, padding="3 3 12 12")
         self.mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
 
+        #defining a notebook widget, it allows us to have a "tab" system in the app
         notebook = ttk.Notebook(self.mainframe, height = 1080, width = 1830)
         notebook.grid(column=0, row=0, sticky=(W,E))
         notebook.grid_propagate(0)
+
+        #defining the Generation "tab" that will contain all relevant widgets for
+        #selecting lessons and generating exercises
+
+        #The Generation tab will be split into three areas -defined below- and is gonna
+        #look a little something like this
+        #------------------------------------------------------------------------------
+        #                      |                             |                         |
+        #                      |                             |                         |
+        #                      |                             |                         |
+        #                      |                             |                         |
+        #                      |                             |                         |
+        #       Lessons        |             options         |   exercises selected    |
+        #                      |                             |                         |
+        #                      |                             |                         |
+        #                      |                             |                         |
+        #                      |                             |                         |
+        #                      |                             |                         |
+        #                      |                             |                         |
+        #                      |                             |                         |
+        #------------------------------------------------------------------------------
 
         Gen = ttk.Frame(notebook, height = 1080, width = 700)
         Gen.grid(column=0,row=1,sticky=(N,W,E,S))
@@ -23,6 +46,28 @@ class App(Frame):
         Gen['relief'] = 'sunken'
         Gen.grid_propagate(0)
 
+
+        #defining the Database "tab" that will contain all relevant widgets for
+        #adding and removing lessons and exercises
+
+        #The Database tab will be split into two areas -defined below- and is gonna
+        #look a little something like this
+        #------------------------------------------------------------------------------
+        #                                      |                                       |
+        #                                      |                                       |
+        #                                      |                                       |
+        #                                      |                                       |
+        #                                      |                                       |
+        #                                      |                                       |
+        #                                      |                                       |
+        #           editing Lessons            |           editing Exercices           |
+        #                                      |                                       |
+        #                                      |                                       |
+        #                                      |                                       |
+        #                                      |                                       |
+        #                                      |                                       |
+        #                                      |                                       |
+        #------------------------------------------------------------------------------
         DB = ttk.Frame(notebook, height = 1080, width = 700)
         DB.grid(column=0,row=1,sticky=(N,W,E,S))
         DB['borderwidth'] = 2
@@ -30,9 +75,11 @@ class App(Frame):
         DB.grid_propagate(0)
         DB.grid_forget()
 
+        #adding the two generation and database widgets to the notebook
         notebook.add(Gen, text = "Gen")
         notebook.add(DB, text = "DB")
 
+        #splitting the Gen tab into 3 frames to contain what we disclosed earlier
         self.Lessons = ttk.Frame(Gen, height =970, width =610)
         self.Lessons.grid(column=0,row=1,sticky=(N,W,S))
         self.Lessons['borderwidth'] = 2
@@ -51,6 +98,7 @@ class App(Frame):
         self.Exos['relief'] = 'sunken'
         self.Exos.grid_propagate(0)
 
+        #splitting the Database tab into 2 frames to contain what we disclosed earlier
         self.DBLessons = ttk.Frame(DB, height =970, width =915)
         self.DBLessons.grid(column=1,row=1,sticky=(N,W,S))
         self.DBLessons['borderwidth'] = 2
@@ -120,6 +168,11 @@ class App(Frame):
         for child in self.mainframe.winfo_children():
             child.grid_configure(padx=5, pady=5)
 
+    # Displaying Lesson names stored in the list L as checkbuttons and storing the value of each check button
+    # in a Tkinter "IntVar" so we could test it's value later on
+    #
+    # @param {list} L : List of lesson names to display
+    # @returns {list} T : List of all "IntVar" to keep checking
     def GuiShowLessons(self, L):
         self.T = []
         for i in range(len(L)):
@@ -136,11 +189,16 @@ class App(Frame):
             self.T.append((L[i], buffer))
         return self.T
 
+    # Deletes selected lessons in checkbox
+    # @params {list} L : list of "IntVar" of checkboxes
     def DelSelected(self, L):
         for i in L:
             if(i[1].get()==1):
                 db.DeleteLesson(i[0])
 
+    # Displays selected exercises and stores the Exercise paths in variable T
+    # @param {list} L : list of the lessons selected by the user
+    # @param {list} T : list where we are going to append selected Exercise path
     def DisplayDS(self, L, T):
         ToDisplay = pdfgen.GetDS(L, self.exnum)
         if(T!=[]):
@@ -148,6 +206,11 @@ class App(Frame):
         for i in ToDisplay:
             T.append(i[0][1])
             ttk.Label(self.Exos, text = i[0][0]).grid(column = 0)
+
+    # Displaying Exercise Ids in databases as checkbuttons and storing the value of each check button
+    # in a Tkinter "IntVar" so we could test it's value later on
+    #
+    # @returns {list} T : List of all "IntVar" to keep checking
     def DisplayExos(self):
         L = db.GetExoName()
         T = []
@@ -157,6 +220,8 @@ class App(Frame):
             T.append((L[i], buffer))
         return T
 
+    # Deletes selected Exercises in checkbox
+    # @params {list} L : list of "IntVar" of checkboxes
     def DelSelectedExos(self, L):
         for i in L:
             if(i[1].get()==1):

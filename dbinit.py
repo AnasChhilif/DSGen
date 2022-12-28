@@ -12,7 +12,7 @@ def main():
     cursor_obj.execute("DROP TABLE IF EXISTS Lesson")
     cursor_obj.execute("DROP TABLE IF EXISTS Exo")
 
-    # Creating table
+    # Creating Lesson table
     table = """ CREATE TABLE Lesson(
                 Name VARCHAR(255) NOT NULL PRIMARY KEY,
                 Ord INT NOT NULL
@@ -20,6 +20,7 @@ def main():
 
     cursor_obj.execute(table)
 
+    #Creating Exercice table
     table = """ CREATE TABLE Exo(
                 Id VARCHAR(255) PRIMARY KEY NOT NULL,
                 Tags VARCHAR(255),
@@ -30,6 +31,7 @@ def main():
 
     cursor_obj.execute(table)
 
+    # putting in dummy values used for testing
     cursor_obj.execute('''INSERT INTO Lesson(Name, Ord) VALUES("biton", 1)''')
     cursor_obj.execute('''INSERT INTO Lesson(Name, Ord) VALUES("shmiton", 2)''')
     cursor_obj.execute('''INSERT INTO Lesson(Name, Ord) VALUES("sliton", 3)''')
