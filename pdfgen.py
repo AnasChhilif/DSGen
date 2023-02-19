@@ -1,6 +1,7 @@
 import os
 import gui, db
 from random import randint
+import time
 
 # Generates a list of exercises to turn into exam depending on the Lessons entered and the number of exercises
 # wanted
@@ -62,3 +63,9 @@ def GeneratePDF(L, binary):
                 DSr.write(LineList[j])
             j+=1
     DSr.write("\end{document}\n")
+    DSr.close()
+    time.sleep(1)
+    os.system('pdflatex result.tex -o result.pdf')
+    os.remove('result.tex')
+    os.remove('result.log')
+    os.remove('result.aux')

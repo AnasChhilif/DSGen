@@ -14,6 +14,11 @@ DSGen, a simple exam generator (DS as in devoir surveillé which basically means
 
 **please note that any change done to the lessons or exercises will only show up when DSGen is closed and reopened.**
 
+## Dependencies :
+- anything in the requirements.txt file
+- texlive-latexextra package, so if you're on arch, run:
+    > sudo pacman -S texlive-latexextra
+
 ## Installation :
 - clone the repo :
 ```bash
@@ -23,6 +28,10 @@ cd DSGen
 - Install python and dependencies that are in "requirements.txt" with pip
 
 - Run
+```bash
+python dbinit.py
+```
+to initialize the database.
 ```bash
 python main.py
 ```
